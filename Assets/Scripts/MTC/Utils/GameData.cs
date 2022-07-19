@@ -6,6 +6,11 @@ namespace MTC.Utils
     [Serializable]
     public class GameData
     {
-        public List<LevelData> LevelData;
+        public List<LevelData> levelData;
+
+        public GameData(List<LevelData> levelData)
+        {
+            this.levelData = levelData;
+        }
     }
 }

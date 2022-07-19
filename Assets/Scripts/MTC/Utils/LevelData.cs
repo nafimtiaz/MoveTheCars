@@ -9,5 +9,11 @@ namespace MTC.Utils
         public int levelIndex;
 
         public List<ParkingLotObjectData> lotObjects;
+
+        public LevelData(int levelIndex, List<ParkingLotObjectData> lotObjects)
+        {
+            this.levelIndex = levelIndex;
+            this.lotObjects = lotObjects;
+        }
     }
 }

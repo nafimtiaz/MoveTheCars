@@ -1,10 +1,9 @@
-using System;
 using MTC.Core.Enums;
 using UnityEngine;
 
 namespace MTC.Utils
 {
-    [Serializable]
+    [System.Serializable]
     public class ParkingLotObjectData
     {
         public ParkingLotObjectType lotObjectType;
@@ -14,5 +13,13 @@ namespace MTC.Utils
         public Vector3 position;
 
         public Vector3 rotation;
+
+        public ParkingLotObjectData(ParkingLotObjectType type, string subType, Vector3 pos, Vector3 rot)
+        {
+            lotObjectType = type;
+            lotObjectSubType = subType;
+            position = pos;
+            rotation = rot;
+        }
     }
 }

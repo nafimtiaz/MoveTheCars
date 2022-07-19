@@ -29,5 +29,10 @@ public class LevelGeneratorGUI : Editor
         {
             builder.GenerateCars();
         }
+        
+        if(GUILayout.Button("Clear All"))
+        {
+            builder.ClearAll();
+        }
     }
 }
