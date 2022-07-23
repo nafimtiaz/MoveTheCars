@@ -19,6 +19,12 @@ public class LevelBuilder : MonoBehaviour
     [SerializeField] 
     private int length = 10;
     
+    [SerializeField] 
+    private int numOfObstacles = 3;
+    
+    [SerializeField] 
+    private int minLinGapObstacles = 2;
+    
     // Wall vars
     private List<BaseParkingLotObject> walls;
     private List<List<bool>> wallMask;
@@ -63,7 +69,7 @@ public class LevelBuilder : MonoBehaviour
     /// </summary>
     public void GenerateObstacles()
     {
-    
+        PlaceObstacles();
     }
     
     /// <summary>
@@ -267,6 +273,59 @@ public class LevelBuilder : MonoBehaviour
 
     #endregion
 
+    #region Obstacle Placement
+
+    private void PlaceObstacles()
+    {
+        bool[] obsMask = GetObstacleMask();
+        
+        for (int l = 0; l < length; l++)
+        {
+            for (int w = 0; w < width; w++)
+            {
+                int posIndex = l * length + w;
+
+                if (obsMask[posIndex])
+                {
+                    ParkingLotObjectData data = new ParkingLotObjectData(
+                        ParkingLotObjectType.Obstacle,
+                        "Barrel",
+                        new Vector3(l, 0f, w),
+                        Vector3.zero);
+
+                    var obsatacle = ObjectCreator.CreateAndPlaceObject(data);
+                    obstacles.Add(obsatacle);
+                    AddToParkingLotObjects(obsatacle);
+                }
+            }
+        }
+    }
+
+    private bool[] GetObstacleMask()
+    {
+        bool[] obsMask = new bool[width * length];
+
+        int maxPossibleObs = obsMask.Length / (minLinGapObstacles + 1);
+
+        if (numOfObstacles > maxPossibleObs)
+        {
+            numOfObstacles = maxPossibleObs;
+        }
+
+        int linGap = obsMask.Length / (numOfObstacles + 1);
+
+        int offsetUnits = linGap - minLinGapObstacles;
+
+        for (int i = 0; i < numOfObstacles; i++)
+        {
+            obsMask[linGap * (i + 1) + Random.Range(minLinGapObstacles, offsetUnits)] = true;
+        }
+
+        return obsMask;
+    }
+
+    #endregion
+    
     #region Vehicle Placement
     
     private IEnumerator RefreshPossibleCarPositions()
@@ -368,6 +427,7 @@ public class LevelBuilder : MonoBehaviour
 
     public void ClearAll()
     {
+        StopAllCoroutines();
         if (allParkingLotObjects != null)
         {
             foreach (var obj in allParkingLotObjects)
