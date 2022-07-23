@@ -10,29 +10,29 @@ public class LevelGeneratorGUI : Editor
 
         LevelBuilder builder = (LevelBuilder)target;
         
-        if(GUILayout.Button("Generate Level"))
+        if(GUILayout.Button("Generate All"))
         {
             builder.GenerateAll();
-        }
-        
-        if(GUILayout.Button("Generate Walls"))
-        {
-            builder.GenerateWalls();
-        }
-        
-        if(GUILayout.Button("Generate Obstacles"))
-        {
-            builder.GenerateObstacles();
-        }
-        
-        if(GUILayout.Button("Generate Cars"))
-        {
-            builder.GenerateCars();
         }
         
         if(GUILayout.Button("Clear All"))
         {
             builder.ClearAll();
+        }
+        
+        if(GUILayout.Button("1. Generate Walls"))
+        {
+            builder.GenerateWalls();
+        }
+        
+        if(GUILayout.Button("2. Generate Obstacles"))
+        {
+            builder.GenerateObstacles();
+        }
+        
+        if(GUILayout.Button("3. Generate Cars"))
+        {
+            builder.GenerateVehicles();
         }
     }
 }
