@@ -1,9 +1,12 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using MTC.Core.Classes;
 using MTC.Core.Enums;
 using MTC.Utils;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class LevelBuilder : MonoBehaviour
 {
@@ -19,6 +22,7 @@ public class LevelBuilder : MonoBehaviour
     // Wall vars
     private List<BaseParkingLotObject> walls;
     private List<List<bool>> wallMask;
+    private List<Dictionary<Vector3,int>> wallGapPositions;
 
     private List<BaseParkingLotObject> cars;
     private List<BaseParkingLotObject> obstacles;
@@ -27,10 +31,18 @@ public class LevelBuilder : MonoBehaviour
 
     private Vector3[] translateUnit =
     {
-        new Vector3(1,0,0),
-        new Vector3(0,0,1),
-        new Vector3(-1,0,0),
-        new Vector3(0,0,-1)
+        Vector3.right, 
+        Vector3.forward, 
+        Vector3.left, 
+        Vector3.back
+    };
+    
+    private Vector3[] globalDirs =
+    {
+        Vector3.forward, 
+        Vector3.left, 
+        Vector3.back, 
+        Vector3.right
     };
 
     #region Level Generator UI Callbacks
@@ -51,7 +63,7 @@ public class LevelBuilder : MonoBehaviour
     /// </summary>
     public void GenerateObstacles()
     {
-
+    
     }
     
     /// <summary>
@@ -61,7 +73,10 @@ public class LevelBuilder : MonoBehaviour
     /// </summary>
     public void GenerateCars()
     {
-
+        if (walls != null && walls.Count > 0)
+        {
+            StartCoroutine(PlaceCars());
+        }
     }
     
     /// <summary>
@@ -80,7 +95,14 @@ public class LevelBuilder : MonoBehaviour
     private void GenerateWallsAroundLot()
     {
         wallMask = GenerateWallsMask();
-
+        wallGapPositions = new List<Dictionary<Vector3, int>>
+        {
+            new Dictionary<Vector3, int>(),
+            new Dictionary<Vector3, int>(),
+            new Dictionary<Vector3, int>(),
+            new Dictionary<Vector3, int>()
+        };
+        
         Vector3 currentPos = Vector3.zero;
 
         for (int i = 0; i < 4; i++)
@@ -101,10 +123,18 @@ public class LevelBuilder : MonoBehaviour
                     walls.Add(wall);
                     AddToParkingLotObjects(wall);
                 }
+                else
+                {
+                    wallGapPositions[i].Add((currentPos + translateUnit[i] * 0.5f - 
+                                            globalDirs[i] * 0.125f + 
+                                            new Vector3(0f,0.5f,0f)),0);
+                }
                 
                 currentPos += translateUnit[i];
             }
         }
+        
+        StartCoroutine(RefreshPossibleCarPositions());
     }
 
     private List<int> GetWallSets()
@@ -219,6 +249,119 @@ public class LevelBuilder : MonoBehaviour
         return mask;
     }
 
+    private void OnDrawGizmos()
+    {
+        if (wallGapPositions != null)
+        {
+            for (int side = 0; side < wallGapPositions.Count; side++)
+            {
+                for (int i = 0; i < wallGapPositions[side].Count; i++)
+                {
+                    var entry = wallGapPositions[side].ElementAt(i);
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawLine(entry.Key, entry.Key + globalDirs[side] * entry.Value);
+                }
+            }
+        }
+    }
+
+    #endregion
+
+    #region Vehicle Placement
+    
+    private IEnumerator RefreshPossibleCarPositions()
+    {
+        bool isAlongLength = true;
+
+        for (int side = 0; side < wallGapPositions.Count; side++)
+        {
+            for (int i = 0; i < wallGapPositions[side].Count; i++)
+            {
+                var entry = wallGapPositions[side].ElementAt(i);
+
+                if (Physics.Raycast(entry.Key,globalDirs[side],out var hit,(length + width)))
+                {
+                    wallGapPositions[side][entry.Key] = Mathf.FloorToInt(Vector3.Distance(entry.Key, hit.point));
+                }
+                else
+                {
+                    wallGapPositions[side][entry.Key] = isAlongLength? width : length;
+                }
+
+                yield return new WaitForFixedUpdate();
+            }
+            
+            isAlongLength = !isAlongLength;
+        }
+    }
+
+    private bool IsBlankSpaceAvailable(List<Dictionary<Vector3,int>> collection)
+    {
+        int entryCount = 0;
+
+        foreach (var dict in collection)
+        {
+            entryCount += dict.Count(x => x.Value >= 2);
+        }
+
+        return entryCount > 0;
+    }
+
+
+    private string GetVehicleType()
+    {
+        var vehicleTypes = Enum.GetValues(typeof(VehicleType)) as VehicleType[];
+
+        if (vehicleTypes != null)
+        {
+            return vehicleTypes[Random.Range(0, vehicleTypes.Length)].ToString();
+        }
+
+        return null;
+    }
+
+    private IEnumerator PlaceCars()
+    {
+        while (IsBlankSpaceAvailable(wallGapPositions))
+        {
+            for (int side = 0; side < 4; side++)
+            {
+                List<Vector3> checkPos = wallGapPositions[side].Keys.ToList();
+                checkPos = checkPos.GetShuffledList();
+
+                for (int i = 0; i < checkPos.Count; i++)
+                {
+                    int blankUnits = wallGapPositions[side][checkPos[i]];
+
+                    if (blankUnits >= 2)
+                    {
+                        float placementUnit = Random.Range(1, blankUnits);
+                        Vector3 pos = checkPos[i] + globalDirs[side] * placementUnit;
+                        pos = new Vector3(pos.x, 0f, pos.z) + globalDirs[side] * 0.125f;
+                        Vector3 addRotation = Random.Range(1, 100) <= 50 ? Vector3.zero : new Vector3(0f, 180f, 0f);
+                        Vector3 rot = new Vector3(0f, -90f * side, 0f) + addRotation;
+                        
+                        ParkingLotObjectData data = new ParkingLotObjectData(
+                            ParkingLotObjectType.Car,
+                            GetVehicleType(),
+                            pos,
+                            rot);
+
+                        var car = ObjectCreator.CreateAndPlaceObject(data);
+                        car.gameObject.name = $"car side:{side}";
+                        cars.Add(car);
+                        AddToParkingLotObjects(car);
+                        StartCoroutine(RefreshPossibleCarPositions());
+                        yield return new WaitForSeconds(0.1f);
+                        break;
+                    }
+                }
+            }
+        }
+        
+        Debug.Log("Done placing cars!");
+    }
+
     #endregion
     
     #region Clearing
@@ -239,6 +382,9 @@ public class LevelBuilder : MonoBehaviour
         walls = new List<BaseParkingLotObject>();
         cars = new List<BaseParkingLotObject>();
         obstacles = new List<BaseParkingLotObject>();
+
+        walls = new List<BaseParkingLotObject>();
+        wallGapPositions = new List<Dictionary<Vector3, int>>();
     }
 
     private void AddToParkingLotObjects(BaseParkingLotObject obj)
