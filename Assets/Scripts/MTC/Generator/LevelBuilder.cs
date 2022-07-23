@@ -28,6 +28,9 @@ public class LevelBuilder : MonoBehaviour
     [SerializeField] 
     private int minLinGapObstacles = 2;
     
+    [SerializeField] [TextArea] 
+    private string levelMessage;
+    
     // Wall vars
     private List<BaseParkingLotObject> walls;
     private List<List<bool>> wallMask;
@@ -465,6 +468,43 @@ public class LevelBuilder : MonoBehaviour
         {
             OnComplete();
         }
+    }
+
+    #endregion
+
+    #region Saving Level
+
+    public void SaveLevel()
+    {
+        LevelData currentLevelData = new LevelData(levelIndex, length, width, levelMessage, GetCurrentParkingLotObjectsData());
+        GameData gameData = DataManager.LoadDataFromJson<GameData>();
+        if (gameData.levelData != null)
+        {
+            gameData.levelData.RemoveAll(lvl => lvl.levelIndex == levelIndex);
+        }
+        else
+        {
+            gameData.levelData = new List<LevelData>();
+        }
+        gameData.levelData.Add(currentLevelData);
+        gameData.levelData = gameData.levelData.OrderBy(lvl => lvl.levelIndex).ToList();
+        DataManager.SaveDataToJson(gameData);
+    }
+
+    private List<ParkingLotObjectData> GetCurrentParkingLotObjectsData()
+    {
+        List<ParkingLotObjectData> objData = new List<ParkingLotObjectData>();
+
+        foreach (var obj in allParkingLotObjects)
+        {
+            objData.Add(new ParkingLotObjectData(
+                obj.LotObjectType,
+                obj.LotObjectSubType,
+                obj.Position,
+                obj.Rotation));
+        }
+
+        return objData;
     }
 
     #endregion

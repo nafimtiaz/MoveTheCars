@@ -12,5 +12,7 @@ namespace MTC.Utils
         {
             this.levelData = levelData;
         }
+        
+        public GameData() { }
     }
 }

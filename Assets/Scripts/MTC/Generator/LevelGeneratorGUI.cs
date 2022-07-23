@@ -15,6 +15,11 @@ public class LevelGeneratorGUI : Editor
             builder.GenerateAll();
         }
         
+        if(GUILayout.Button("Save Level"))
+        {
+            builder.SaveLevel();
+        }
+        
         if(GUILayout.Button("Clear All"))
         {
             builder.ClearAll();
