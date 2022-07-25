@@ -3,11 +3,13 @@ using MTC.Core.Enums;
 using MTC.Core.Interfaces;
 using UnityEngine;
 using DG.Tweening;
+using MTC.Utils;
 
 public class Vehicle : BaseParkingLotObject, IVehicle
 {
     public int VehicleLength { get; set; }
     public VehicleType VehicleType { get; set; }
+    private Sequence sequence;
     
     /// <summary>
     /// Called when car successfully moves out of the parking lot
@@ -33,16 +35,24 @@ public class Vehicle : BaseParkingLotObject, IVehicle
         if(Physics.Raycast(origin,dir,out hit,Mathf.Infinity))
         {
             float dist = Mathf.RoundToInt(hit.distance);
-            transform.DOMove(transform.position + (dir * dist), dist * 0.1f).SetEase(Ease.Linear).OnComplete((() =>
+            
+            if (hit.transform.GetComponent<IParkingLotObject>() != null)
             {
-                IParkingLotObject lotObject = hit.transform.GetComponent<IParkingLotObject>();
-                OnImpact();
-                lotObject.OnImpact();
-            }));
-        }
-        else
-        {
-            // car moves out
+                transform.DOMove(transform.position + (dir * dist), dist * 0.1f).SetEase(Ease.Linear).OnComplete((() =>
+                {
+                    IParkingLotObject lotObject = hit.transform.GetComponent<IParkingLotObject>();
+                    OnImpact();
+                    lotObject.OnImpact();
+                }));
+            }
+            else
+            {
+                transform.DOMove(transform.position + (dir * dist), dist * 0.1f).SetEase(Ease.Linear).OnComplete((() =>
+                {
+                    // TODO: vehicle move out sequence
+                    gameObject.SetActive(false);
+                }));
+            }
         }
     }
 
