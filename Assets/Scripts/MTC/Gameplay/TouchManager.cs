@@ -11,8 +11,6 @@ namespace MTC.Gameplay
         private Vector3 touchEndPos = Vector3.zero;
         private Transform currentSelectedVehicle;
 
-        private int moveCount = 0;
-
         private readonly Vector3[] globalDirs = 
         {
             Vector3.forward, 
@@ -31,20 +29,16 @@ namespace MTC.Gameplay
                 {
                     case TouchPhase.Began:
                         isTouchRecorded = false;
-                        // Debug.Log("Touch Began!");
                         SelectVehicle(Camera.main.ScreenPointToRay(t.position));
                         break;
                     case TouchPhase.Moved:
                         if (!isTouchRecorded)
                         {
-                            // Debug.Log($"Touch Moved! Move count:{moveCount}");
                             GetVehicleDir(Camera.main.ScreenPointToRay(t.position));
                             isTouchRecorded = true;
-                            moveCount++;
                         }
                         break;
                     case TouchPhase.Ended:
-                        // Debug.Log("Touch Ended!");
                         isTouchRecorded = false;
                         break;
                 }
@@ -77,7 +71,8 @@ namespace MTC.Gameplay
                 if (currentSelectedVehicle != null)
                 {
                     Vector3 dir = (touchEndPos - touchStartPos).normalized;
-                    Debug.Log($"{currentSelectedVehicle.gameObject.name} is directed towards {GetGlobalDirection(dir)}");
+                    Vector3 targetDir = GetGlobalDirection(dir);
+                    currentSelectedVehicle.GetComponent<Vehicle>().CheckAndMove(targetDir);
                 }
             }
         }

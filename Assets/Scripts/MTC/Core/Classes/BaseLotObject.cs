@@ -1,3 +1,4 @@
+using DG.Tweening;
 using MTC.Core.Enums;
 using MTC.Core.Interfaces;
 using MTC.Utils;
@@ -40,7 +41,7 @@ namespace MTC.Core.Classes
         /// </summary>
         public virtual void OnImpact()
         {
-            MakeImpactSound();
+            MakeImpactVibration();
             MakeImpactSound();
         }
 
@@ -51,7 +52,7 @@ namespace MTC.Core.Classes
         
         private void MakeImpactVibration()
         {
-            
+            transform.DOShakePosition(0.3f, 0.1f, 15, 0f);
         }
     }
 }

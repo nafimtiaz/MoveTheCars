@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4846368522402190487}
   - component: {fileID: 6531675711611749566}
   - component: {fileID: 6860432110329110458}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Taxi_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 2}
+  m_Size: {x: 0.8, y: 0.8, z: 1.8}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &6860432110329110458
 MonoBehaviour:

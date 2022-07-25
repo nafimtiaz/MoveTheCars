@@ -1,4 +1,5 @@
 using MTC.Core.Enums;
+using UnityEngine;
 
 namespace MTC.Core.Interfaces
 {
@@ -9,5 +10,7 @@ namespace MTC.Core.Interfaces
         public VehicleType VehicleType { get; set; }
 
         public void OnSuccess();
+        
+        public void CheckAndMove(Vector3 dir);
     }   
 }
