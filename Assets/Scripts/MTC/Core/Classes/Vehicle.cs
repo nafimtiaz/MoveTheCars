@@ -10,7 +10,17 @@ public class Vehicle : BaseParkingLotObject, IVehicle
     public int VehicleLength { get; set; }
     public VehicleType VehicleType { get; set; }
     private Sequence sequence;
-    
+
+    public override void PopulateObject(ParkingLotObjectData data)
+    {
+        base.PopulateObject(data);
+        BoxCollider collider = GetComponent<BoxCollider>();
+        
+        collider.center = GameManager.GetConfig().vehicleColliderPosition;
+        collider.size = GameManager.GetConfig().vehicleColliderScale;
+
+    }
+
     /// <summary>
     /// Called when car successfully moves out of the parking lot
     /// </summary>
@@ -35,25 +45,31 @@ public class Vehicle : BaseParkingLotObject, IVehicle
         if(Physics.Raycast(origin,dir,out hit,Mathf.Infinity))
         {
             float dist = Mathf.RoundToInt(hit.distance);
+            float moveDuration = dist / GameManager.GetConfig().vehicleSpeedUnitsPerSecond;
             
             if (hit.transform.GetComponent<IParkingLotObject>() != null)
             {
-                transform.DOMove(transform.position + (dir * dist), dist * 0.1f).SetEase(Ease.Linear).OnComplete((() =>
+                transform.DOMove(transform.position + (dir * dist), moveDuration).SetEase(Ease.Linear).OnComplete((() =>
                 {
-                    IParkingLotObject lotObject = hit.transform.GetComponent<IParkingLotObject>();
-                    OnImpact();
-                    lotObject.OnImpact();
-                }));
-            }
-            else
-            {
-                transform.DOMove(transform.position + (dir * dist), dist * 0.1f).SetEase(Ease.Linear).OnComplete((() =>
-                {
-                    // TODO: vehicle move out sequence
-                    gameObject.SetActive(false);
+                    if (hit.transform.GetComponent<IParkingLotObject>() != null)
+                    {
+                        IParkingLotObject lotObject = hit.transform.GetComponent<IParkingLotObject>();
+                        OnImpact();
+                        lotObject.OnImpact();
+                    }
+                    else
+                    {
+                        // TODO: vehicle move out sequence
+                        StartEscapeSequence();
+                    }
                 }));
             }
         }
+    }
+
+    private void StartEscapeSequence()
+    {
+        gameObject.SetActive(false);
     }
 
     private void MakeSuccessSound()
