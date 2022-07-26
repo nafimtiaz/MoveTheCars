@@ -476,6 +476,8 @@ public class LevelBuilder : MonoBehaviour
 
     public void SaveLevel()
     {
+        #if UNITY_EDITOR
+        
         LevelData currentLevelData = new LevelData(levelIndex, length, width, levelMessage, GetCurrentParkingLotObjectsData());
         GameData gameData = DataManager.LoadDataFromJson<GameData>();
         if (gameData.levelData != null)
@@ -489,6 +491,8 @@ public class LevelBuilder : MonoBehaviour
         gameData.levelData.Add(currentLevelData);
         gameData.levelData = gameData.levelData.OrderBy(lvl => lvl.levelIndex).ToList();
         DataManager.SaveDataToJson(gameData);
+        
+        #endif
     }
 
     private List<ParkingLotObjectData> GetCurrentParkingLotObjectsData()
