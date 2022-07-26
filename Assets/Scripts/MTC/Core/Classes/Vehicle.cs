@@ -47,23 +47,20 @@ public class Vehicle : BaseParkingLotObject, IVehicle
             float dist = Mathf.RoundToInt(hit.distance);
             float moveDuration = dist / GameManager.GetConfig().vehicleSpeedUnitsPerSecond;
             
-            if (hit.transform.GetComponent<IParkingLotObject>() != null)
+            transform.DOMove(transform.position + (dir * dist), moveDuration).SetEase(Ease.Linear).OnComplete((() =>
             {
-                transform.DOMove(transform.position + (dir * dist), moveDuration).SetEase(Ease.Linear).OnComplete((() =>
+                if (hit.transform.GetComponent<IParkingLotObject>() != null)
                 {
-                    if (hit.transform.GetComponent<IParkingLotObject>() != null)
-                    {
-                        IParkingLotObject lotObject = hit.transform.GetComponent<IParkingLotObject>();
-                        OnImpact();
-                        lotObject.OnImpact();
-                    }
-                    else
-                    {
-                        // TODO: vehicle move out sequence
-                        StartEscapeSequence();
-                    }
-                }));
-            }
+                    IParkingLotObject lotObject = hit.transform.GetComponent<IParkingLotObject>();
+                    OnImpact();
+                    lotObject.OnImpact();
+                }
+                else
+                {
+                    // TODO: vehicle move out sequence
+                    StartEscapeSequence();
+                }
+            }));
         }
     }
 
