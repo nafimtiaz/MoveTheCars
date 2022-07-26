@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class MTCHomeView : MonoBehaviour
 {
-    public LevelData LevelData { get; set; }
+    public LevelData LevelData => currentLevelData;
     private LevelData currentLevelData;
 
 
@@ -29,5 +29,7 @@ public class MTCHomeView : MonoBehaviour
         {
             ObjectCreator.CreateAndPlaceObject(objData);
         }
+
+        ObjectCreator.CreateParkingLot(currentLevelData.length, currentLevelData.width);
     }
 }

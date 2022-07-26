@@ -30,5 +30,29 @@ namespace MTC.Utils
                 return null;
             }
         }
+            
+        /// <summary>
+        /// Creates the parking lot ground
+        /// </summary>
+        public static GameObject CreateParkingLot(int length, int width)
+        {
+            try
+            {
+                var assetPath = "EnvObjects/ParkingLot";
+                var parkingLot = Object.Instantiate(Resources.Load(assetPath)) as GameObject;
+                if (parkingLot != null)
+                {
+                    parkingLot.transform.localScale = new Vector3(length, 1f, width);
+                    parkingLot.transform.localEulerAngles = new Vector3(0f, -180f, 0f);
+                }
+
+                return parkingLot;
+            }
+            catch(Exception ex)
+            {
+                Debug.LogError("Failed to create parking lot");
+                return null;
+            }
+        }
     }
 }
