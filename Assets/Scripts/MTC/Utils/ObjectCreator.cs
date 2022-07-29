@@ -12,12 +12,22 @@ namespace MTC.Utils
         /// </summary>
         /// <param name="data">ParkingLotObjectData of an object in a level retrieved from json</param>
         /// <returns>the BaseParkingLotObject that has been created</returns>
-        public static BaseParkingLotObject CreateAndPlaceObject(ParkingLotObjectData data)
+        public static BaseParkingLotObject CreateAndPlaceObject(ParkingLotObjectData data, bool fromPool = false)
         {
+            GameObject lotGameObject;
+            
             try
             {
-                var assetPath = $"Objects/{data.lotObjectType.ToString()}/{data.lotObjectSubType}";
-                var lotGameObject = Object.Instantiate(Resources.Load(assetPath)) as GameObject;
+                if (!fromPool)
+                {
+                    var assetPath = $"Objects/{data.lotObjectType.ToString()}/{data.lotObjectSubType}";
+                    lotGameObject = Object.Instantiate(Resources.Load(assetPath)) as GameObject;
+                }
+                else
+                {
+                    lotGameObject = GameManager.GetPool().GetObjectFromPool(data.lotObjectSubType);
+                    lotGameObject.SetActive(true);
+                }
 
                 if (lotGameObject == null) return null;
                 var lotObject = lotGameObject.GetComponent<BaseParkingLotObject>();
@@ -27,30 +37,6 @@ namespace MTC.Utils
             catch(Exception ex)
             {
                 Debug.LogError($"Failed to create object [{data.lotObjectSubType}] of type [{data.lotObjectType.ToString()}], {ex.Message}");
-                return null;
-            }
-        }
-            
-        /// <summary>
-        /// Creates the parking lot ground
-        /// </summary>
-        public static GameObject CreateParkingLot(int length, int width)
-        {
-            try
-            {
-                var assetPath = "EnvObjects/ParkingLot";
-                var parkingLot = Object.Instantiate(Resources.Load(assetPath)) as GameObject;
-                if (parkingLot != null)
-                {
-                    parkingLot.transform.localScale = new Vector3(length, 1f, width);
-                    parkingLot.transform.localEulerAngles = new Vector3(0f, -180f, 0f);
-                }
-
-                return parkingLot;
-            }
-            catch(Exception ex)
-            {
-                Debug.LogError("Failed to create parking lot");
                 return null;
             }
         }

@@ -14,13 +14,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetFPS: 60
   vehicleSpeedUnitsPerSecond: 10
+  vehiclePoolCount: 10
+  wallPoolCount: 50
+  obstaclePoolCount: 10
+  roadPoolCount: 50
+  vehicles:
+  - {fileID: 6836422532573847242, guid: 3c08aff2ef951194b8925cdded7ec3b8, type: 3}
+  - {fileID: 6838469909005642854, guid: d09a964ced5836b4ebb7952b3c62fd84, type: 3}
+  - {fileID: 2667675880631317527, guid: cb2a20ac02c20e74abb056fc15944ee7, type: 3}
+  - {fileID: 4694242755318500678, guid: c2e3939a868931049abc3432dad0e4da, type: 3}
+  - {fileID: 7712858565574155689, guid: 224d32f570b8ddb48904f4996af0c1b8, type: 3}
+  - {fileID: 2421280206206989294, guid: eb85967c5c50a1e47a6c0bd1bc4125b8, type: 3}
+  - {fileID: 316968014279243160, guid: 8f241df769507024589aed00be21634c, type: 3}
+  - {fileID: 4353772860981245304, guid: 5e50cc97e2ae1654eafc1c06b0598c38, type: 3}
+  - {fileID: 4488979265013264636, guid: ff30cb6d8d4b98a429d9e2e553f721bb, type: 3}
+  - {fileID: 4544575523666629921, guid: d2cae8cbe2583924ea2ce2a6644b7da9, type: 3}
+  - {fileID: 7362750447251239723, guid: 3a6b3b3cbef4bd547ba26fa2fb59dd21, type: 3}
+  - {fileID: 7504950849541501972, guid: 214ac0e4fb1431a4aacd7761fe8ce74c, type: 3}
+  - {fileID: 1685099278251828060, guid: 69e19b5c7e7b40240a1c0f75ac2fd99a, type: 3}
+  - {fileID: 4413064323827085455, guid: 290feb150f3db75419528a6cdae85814, type: 3}
+  walls:
+  - {fileID: 6854582937271742333, guid: 263d8a2d0e0b74db9991c2668562b6d0, type: 3}
+  obstacles:
+  - {fileID: 802647244269669465, guid: 520eae23a99894b38b2e32bf3b609c43, type: 3}
+  roads:
+  - {fileID: 4080966421564886123, guid: 527d606bc84044c96b3c87e9f5ade57f, type: 3}
   lotColliderPosition: {x: -0.5, y: 0, z: -0.5}
   lotColliderScale: {x: 1, y: 0.1, z: 1}
   vehicleColliderPosition: {x: 0, y: 0.3, z: 0}
   vehicleColliderScale: {x: 0.8, y: 0.5, z: 1.8}
-  obstacleColliderPosition: {x: 0.5, y: 0.5, z: 0.5}
+  obstacleColliderPosition: {x: 0.5, y: 0.3, z: 0.5}
   obstacleColliderScale: {x: 0.8, y: 0.5, z: 0.8}
-  wallColliderPosition: {x: 1, y: 0.5, z: -0.3}
+  wallColliderPosition: {x: 1, y: 0.3, z: -0.3}
   wallColliderScale: {x: 2, y: 0.5, z: -0.3}
   roadColliderPosition: {x: 0.5, y: 0.5, z: -1}
   roadColliderScale: {x: 1, y: 1, z: 0.5}

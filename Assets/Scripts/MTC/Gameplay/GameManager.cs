@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using MTC.Gameplay;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,8 +9,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private MTCGameConfig gameConfig;
-    public MTCGameConfig Config => gameConfig;
-    
+
+    private PoolManager PoolManager;
 
     private void Awake()
     {
@@ -22,8 +24,24 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = gameConfig.targetFPS;
     }
 
+    private void Start()
+    {
+        CreateObjectPool();
+    }
+
+    private void CreateObjectPool()
+    {
+        PoolManager = new PoolManager();
+        PoolManager.CreatePool();
+    }
+
     public static MTCGameConfig GetConfig()
     {
         return Instance.gameConfig;
+    }
+    
+    public static PoolManager GetPool()
+    {
+        return Instance.PoolManager;
     }
 }

@@ -314,14 +314,15 @@ public class LevelBuilder : MonoBehaviour
     private void PlaceObstacles(Action OnComplete = null)
     {
         bool[] obsMask = GetObstacleMask();
+        int obsMaskInd = -1;
         
         for (int l = 0; l < length; l++)
         {
             for (int w = 0; w < width; w++)
             {
-                int posIndex = l * length + w;
+                obsMaskInd++;
 
-                if (obsMask[posIndex])
+                if (obsMask[obsMaskInd])
                 {
                     ParkingLotObjectData data = new ParkingLotObjectData(
                         ParkingLotObjectType.Obstacle,

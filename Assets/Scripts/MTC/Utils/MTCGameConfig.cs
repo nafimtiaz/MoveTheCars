@@ -6,6 +6,17 @@ public class MTCGameConfig : ScriptableObject
     [Header("Common")]
     public int targetFPS;
     public float vehicleSpeedUnitsPerSecond;
+    
+    [Header("Poolong")]
+    public int vehiclePoolCount;
+    public int wallPoolCount;
+    public int obstaclePoolCount;
+    public int roadPoolCount;
+    
+    public GameObject[] vehicles;
+    public GameObject[] walls;
+    public GameObject[] obstacles;
+    public GameObject[] roads;
 
     [Header("Parking Lot")]
     public Vector3 lotColliderPosition;
