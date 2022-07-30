@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - obstacle
+  - cornerRight
+  - cornerLeft
+  - finish
   layers:
   - Default
   - TransparentFX

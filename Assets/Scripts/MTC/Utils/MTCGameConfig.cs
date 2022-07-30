@@ -6,8 +6,10 @@ public class MTCGameConfig : ScriptableObject
     [Header("Common")]
     public int targetFPS;
     public float vehicleSpeedUnitsPerSecond;
+    public float vehicleLinearSpeed;
+    public float vehicleTurningTime;
     
-    [Header("Poolong")]
+    [Header("Pooling")]
     public int vehiclePoolCount;
     public int wallPoolCount;
     public int obstaclePoolCount;

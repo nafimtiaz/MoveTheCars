@@ -259,14 +259,14 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.8
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.802082
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
-    m_Resolution: 0
+    m_Type: 0
+    m_Resolution: 2
     m_CustomResolution: -1
     m_Strength: 1
     m_Bias: 0.05
@@ -415,7 +415,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -822,14 +822,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1187174777}
-  m_LocalRotation: {x: 0.12222274, y: -0.8762041, z: 0.35648417, w: 0.3004117}
-  m_LocalPosition: {x: 10.3, y: 11.34, z: 11.42}
+  m_LocalRotation: {x: 0.14905985, y: -0.8401183, z: 0.43475938, w: 0.2880395}
+  m_LocalPosition: {x: 9.05, y: 12.78, z: 9.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 46.932, y: 33.478, z: -0.008}
+  m_LocalEulerAnglesHint: {x: 54.723, y: -142.151, z: 0}
 --- !u!1001 &1389994146
 PrefabInstance:
   m_ObjectHideFlags: 0
