@@ -12,7 +12,9 @@ public class MTCHomeView : MonoBehaviour
     [SerializeField] private Transform parkingLotParent;
     [SerializeField] private Transform parkingLotGround;
     [SerializeField] private Transform[] roadCorners;
-    
+
+    private List<GameObject> currentPoolObjects;
+
 
     #region Create/Clear Scene
     
@@ -33,6 +35,7 @@ public class MTCHomeView : MonoBehaviour
     };
     public void GenerateScene(int levelIndex)
     {
+        ClearLevel();
         PlaceParkingLotObjects(levelIndex);
     }
 
@@ -54,6 +57,7 @@ public class MTCHomeView : MonoBehaviour
             for (int n = 0; n < roadCount; n++)
             {
                 GameObject roadObject = GameManager.GetPool().GetObjectFromPool("RoadDefault");
+                currentPoolObjects.Add(roadObject);
                 roadObject.SetActive(true);
                 roadObject.transform.SetParent(parkingLotParent);
                 roadObject.transform.localPosition = currentPos;
@@ -70,12 +74,26 @@ public class MTCHomeView : MonoBehaviour
 
         foreach (var objData in currentLevelData.lotObjects)
         {
-            BaseParkingLotObject obj = ObjectCreator.CreateAndPlaceObject(objData);
+            BaseParkingLotObject obj = ObjectCreator.CreateAndPlaceObject(objData,true);
+            currentPoolObjects.Add(obj.gameObject);
             obj.gameObject.SetActive(true);
             obj.transform.SetParent(parkingLotParent);
         }
 
         PlaceRoads(currentLevelData.length, currentLevelData.width);
+    }
+
+    void ClearLevel()
+    {
+        if (currentPoolObjects != null)
+        {
+            for (int i = 0; i < currentPoolObjects.Count; i++)
+            {
+                GameManager.GetPool().ReturnObjectToPool(currentPoolObjects[i]);
+            }   
+        }
+
+        currentPoolObjects = new List<GameObject>();
     }
 
     #endregion
