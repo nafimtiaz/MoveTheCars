@@ -12,18 +12,55 @@ public class MTCHomeView : MonoBehaviour
     [SerializeField] private Transform parkingLotParent;
     [SerializeField] private Transform parkingLotGround;
     [SerializeField] private Transform[] roadCorners;
+    
 
+    #region Create/Clear Scene
+    
+    private readonly Vector3[] roadRotations =
+    {
+        new Vector3(0f,0f,0f),
+        new Vector3(0f,-90f,0f),
+        new Vector3(0f,180f,0f),
+        new Vector3(0f,90f,0f),
+    };
+    
+    private Vector3[] translateUnit =
+    {
+        Vector3.right, 
+        Vector3.forward, 
+        Vector3.left, 
+        Vector3.back
+    };
     public void GenerateScene(int levelIndex)
     {
         PlaceParkingLotObjects(levelIndex);
     }
 
-    void PlaceLotAndCorners(int length, int width)
+    void PlaceRoads(int length, int width)
     {
         parkingLotGround.transform.localScale = new Vector3(length, 1f, width);
         roadCorners[0].localPosition = new Vector3(length, 0f, 0f);
         roadCorners[1].localPosition = new Vector3(length, 0f, width);
         roadCorners[2].localPosition = new Vector3(0f, 0f, width);
+        
+        bool isLength = false;
+        Vector3 currentPos = Vector3.zero;
+        
+        for (int side = 0; side < 4; side++)
+        {
+            isLength = !isLength;
+            int roadCount = isLength ? length : width;
+
+            for (int n = 0; n < roadCount; n++)
+            {
+                GameObject roadObject = GameManager.GetPool().GetObjectFromPool("RoadDefault");
+                roadObject.SetActive(true);
+                roadObject.transform.SetParent(parkingLotParent);
+                roadObject.transform.localPosition = currentPos;
+                roadObject.transform.localEulerAngles = roadRotations[side];
+                currentPos += translateUnit[side];
+            }
+        }
     }
 
     void PlaceParkingLotObjects(int levelIndex)
@@ -38,6 +75,8 @@ public class MTCHomeView : MonoBehaviour
             obj.transform.SetParent(parkingLotParent);
         }
 
-        PlaceLotAndCorners(currentLevelData.length, currentLevelData.width);
+        PlaceRoads(currentLevelData.length, currentLevelData.width);
     }
+
+    #endregion
 }

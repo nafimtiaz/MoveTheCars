@@ -53,7 +53,7 @@ namespace MTC.Gameplay
 
             if (objects.Length > 0)
             {
-                GameObject obj = poolObjects[0];
+                GameObject obj = objects[0];
                 poolObjects.Remove(obj);
                 poolObjects.TrimExcess();
                 return obj;
