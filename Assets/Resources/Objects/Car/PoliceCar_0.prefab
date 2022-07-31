@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 147764643282724920}
   m_Layer: 7
   m_Name: PoliceCar_0
-  m_TagString: Untagged
+  m_TagString: vehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,6 +59,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94b4865264efa4d2c89c0cd4de265335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMovingFwd: 0
+  isTurning: 0
+  isConsecutiveTurn: 0
 --- !u!1 &8150232889325513924
 GameObject:
   m_ObjectHideFlags: 0

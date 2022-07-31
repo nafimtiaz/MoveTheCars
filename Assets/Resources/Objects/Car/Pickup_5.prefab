@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1215267703619729269}
   m_Layer: 7
   m_Name: Pickup_5
-  m_TagString: Untagged
+  m_TagString: vehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,6 +59,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c8114510e6334f6bbf066e7d68d0ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMovingFwd: 0
+  isTurning: 0
+  isConsecutiveTurn: 0
 --- !u!1 &3129612812790687574
 GameObject:
   m_ObjectHideFlags: 0

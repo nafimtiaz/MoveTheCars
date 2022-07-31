@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6648570987533092355}
   m_Layer: 7
   m_Name: Car_2
-  m_TagString: Untagged
+  m_TagString: vehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,3 +142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2fc7797ad95741aeb1e109c9240ae5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMovingFwd: 0
+  isTurning: 0
+  isConsecutiveTurn: 0
