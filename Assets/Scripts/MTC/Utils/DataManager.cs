@@ -14,13 +14,15 @@ namespace MTC.Utils
             
             try
             {
-                using (FileStream fs = new FileStream(GetJsonFilePath<T>(), FileMode.Create)){
-                    using (StreamWriter writer = new StreamWriter(fs)){
-                        writer.Write(JsonUtility.ToJson(dataToSave));
-                    }
+                FileStream fs = new FileStream(GetJsonFilePath<T>(), FileMode.Create);
+
+                using (StreamWriter writer = new StreamWriter(fs)){
+                    writer.Write(JsonUtility.ToJson(dataToSave));
                 }
-                
+
                 Debug.Log("Level saved successfully!");
+                fs.Close();
+                
             }
             catch (Exception e)
             {

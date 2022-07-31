@@ -27,6 +27,9 @@ public class Vehicle : BaseParkingLotObject, IVehicle
         collider.center = GameManager.GetConfig().vehicleColliderPosition;
         collider.size = GameManager.GetConfig().vehicleColliderScale;
 
+        isTurning = false;
+        isMovingFwd = false;
+        isConsecutiveTurn = false;
     }
 
     #region Vehicle Interaction

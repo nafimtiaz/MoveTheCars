@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetFPS: 60
   vehicleSpeedUnitsPerSecond: 10
-  vehicleLinearSpeed: 5
-  vehicleTurningTime: 0.5
+  vehicleLinearSpeed: 10
+  vehicleTurningTime: 0.25
   vehiclePoolCount: 10
   wallPoolCount: 50
   obstaclePoolCount: 10
@@ -48,6 +48,6 @@ MonoBehaviour:
   obstacleColliderPosition: {x: 0.5, y: 0.3, z: 0.5}
   obstacleColliderScale: {x: 0.8, y: 0.5, z: 0.8}
   wallColliderPosition: {x: 1, y: 0.3, z: -0.3}
-  wallColliderScale: {x: 2, y: 0.5, z: -0.3}
+  wallColliderScale: {x: 2, y: 0.5, z: 0.3}
   roadColliderPosition: {x: 0.5, y: 0.5, z: -1}
   roadColliderScale: {x: 1, y: 1, z: 0.5}

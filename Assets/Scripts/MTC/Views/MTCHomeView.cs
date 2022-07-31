@@ -56,13 +56,20 @@ public class MTCHomeView : MonoBehaviour
 
             for (int n = 0; n < roadCount; n++)
             {
-                GameObject roadObject = GameManager.GetPool().GetObjectFromPool("RoadDefault");
-                currentPoolObjects.Add(roadObject);
-                roadObject.SetActive(true);
-                roadObject.transform.SetParent(parkingLotParent);
-                roadObject.transform.localPosition = currentPos;
-                roadObject.transform.localEulerAngles = roadRotations[side];
-                currentPos += translateUnit[side];
+                if (side == 0 && n < 2)
+                {
+                    currentPos += translateUnit[side];
+                }
+                else
+                {
+                    GameObject roadObject = GameManager.GetPool().GetObjectFromPool("RoadDefault");
+                    currentPoolObjects.Add(roadObject);
+                    roadObject.SetActive(true);
+                    roadObject.transform.SetParent(parkingLotParent);
+                    roadObject.transform.localPosition = currentPos;
+                    roadObject.transform.localEulerAngles = roadRotations[side];
+                    currentPos += translateUnit[side];
+                }
             }
         }
     }

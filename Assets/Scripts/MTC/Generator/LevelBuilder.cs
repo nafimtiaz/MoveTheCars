@@ -154,6 +154,9 @@ public class LevelBuilder : MonoBehaviour
             new Dictionary<Vector3, int>(),
             new Dictionary<Vector3, int>()
         };
+
+        wallMask[0][0] = true;
+        wallMask[0][1] = true;
         
         Vector3 currentPos = Vector3.zero;
 
