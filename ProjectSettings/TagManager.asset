@@ -8,6 +8,7 @@ TagManager:
   - cornerRight
   - cornerLeft
   - finish
+  - vehicle
   layers:
   - Default
   - TransparentFX
