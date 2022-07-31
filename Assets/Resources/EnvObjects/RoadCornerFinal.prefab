@@ -1544,9 +1544,11 @@ GameObject:
   - component: {fileID: 4916416272557908717}
   - component: {fileID: 5202937597195969961}
   - component: {fileID: 3836444001091834366}
-  - component: {fileID: 8176394590590115492}
+  - component: {fileID: 6938891769253363390}
+  - component: {fileID: 9062814204747054738}
+  - component: {fileID: 1003367959003062789}
   m_Layer: 0
-  m_Name: ParkingBox_01(Clone)
+  m_Name: ParkingBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1563,9 +1565,11 @@ Transform:
   m_LocalPosition: {x: -0, y: -0.015, z: -0.456}
   m_LocalScale: {x: 0.15, y: 0.75, z: 0.15}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7747940945856493762}
+  - {fileID: 2386691947361404292}
   m_Father: {fileID: 5005910447497379348}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5202937597195969961
 MeshFilter:
@@ -1617,20 +1621,48 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8176394590590115492
-MeshCollider:
+--- !u!65 &6938891769253363390
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2169735404023454296}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 4c46bd7261c0718428ee4c9fd120e073, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 1.926987, y: 1.5676384, z: 2.9011428}
+  m_Center: {x: 1.3254517, y: 0.7835188, z: -1.074007}
+--- !u!114 &9062814204747054738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2169735404023454296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d077737c2ed4181be0ff66a920684d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bar: {fileID: 2826531704867470633}
+--- !u!54 &1003367959003062789
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2169735404023454296}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2421300968568978212
 GameObject:
   m_ObjectHideFlags: 0
@@ -1974,9 +2006,8 @@ GameObject:
   - component: {fileID: 2826531704867470633}
   - component: {fileID: 2826531704870894857}
   - component: {fileID: 2826531704869765065}
-  - component: {fileID: 9197421384735947003}
   m_Layer: 0
-  m_Name: Parking_03_2
+  m_Name: bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1989,7 +2020,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2826531704867823881}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.015, y: 0.611, z: -0.005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2047,20 +2078,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &9197421384735947003
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2826531704867823881}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 4bc97e2440bed8640bef86f457c5d3ce, type: 3}
 --- !u!1 &2856640887047966297
 GameObject:
   m_ObjectHideFlags: 0
@@ -2257,10 +2274,8 @@ Transform:
   m_LocalScale: {x: 5, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7747940945856493762}
   - {fileID: 5041760739199626186}
   - {fileID: 7311077681493082741}
-  - {fileID: 2386691947361404292}
   - {fileID: 4916416272557908717}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -3329,7 +3344,7 @@ Transform:
   - {fileID: 5233980993258082832}
   - {fileID: 1236805264154807979}
   m_Father: {fileID: 5005910447497379348}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4856914776256543848
 GameObject:
@@ -3923,9 +3938,8 @@ GameObject:
   - component: {fileID: 2386691947361404292}
   - component: {fileID: 7751212479505141768}
   - component: {fileID: 7737201211880360015}
-  - component: {fileID: 6347909422719007783}
   m_Layer: 0
-  m_Name: ParkingStop (1)
+  m_Name: ParkingStopDummy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3939,13 +3953,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5754849767120574636}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: -0.377, y: 0.006, z: -0.616}
-  m_LocalScale: {x: 0.2, y: 1, z: 0.2}
+  m_LocalPosition: {x: -2.513333, y: 0.028, z: -1.0666665}
+  m_LocalScale: {x: 1.3333334, y: 1.3333334, z: 1.3333334}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4465186580877254740}
-  m_Father: {fileID: 5005910447497379348}
-  m_RootOrder: 3
+  m_Father: {fileID: 4916416272557908717}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!33 &7751212479505141768
 MeshFilter:
@@ -3997,20 +4011,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6347909422719007783
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5754849767120574636}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 53a28ec29e4da2f4eb5a0a1ad9dfba2e, type: 3}
 --- !u!1 &5765144903675367842
 GameObject:
   m_ObjectHideFlags: 0
@@ -4354,7 +4354,6 @@ GameObject:
   - component: {fileID: 4465186580877254740}
   - component: {fileID: 7993956435020378866}
   - component: {fileID: 1881508340921361353}
-  - component: {fileID: 7060086292726634556}
   m_Layer: 0
   m_Name: Parking_03_2
   m_TagString: Untagged
@@ -4427,20 +4426,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7060086292726634556
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6121069511251220779}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 4bc97e2440bed8640bef86f457c5d3ce, type: 3}
 --- !u!1 &6223889360862570396
 GameObject:
   m_ObjectHideFlags: 0
@@ -5219,7 +5204,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5005910447497379348}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &2381239260901967514
 BoxCollider:
@@ -5676,7 +5661,6 @@ GameObject:
   - component: {fileID: 7747940945856493762}
   - component: {fileID: 7747940945853593826}
   - component: {fileID: 7747940945854724642}
-  - component: {fileID: 1782323921792730685}
   m_Layer: 0
   m_Name: ParkingStop
   m_TagString: Untagged
@@ -5691,13 +5675,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7747940945856652514}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.372, y: 0.006, z: -0.61599994}
-  m_LocalScale: {x: 0.2, y: 1, z: 0.2}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.4799998, y: 0.028, z: -1.0666661}
+  m_LocalScale: {x: 1.3333334, y: 1.3333334, z: 1.3333334}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2826531704867470633}
-  m_Father: {fileID: 5005910447497379348}
+  m_Father: {fileID: 4916416272557908717}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7747940945853593826
@@ -5750,20 +5734,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1782323921792730685
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7747940945856652514}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 53a28ec29e4da2f4eb5a0a1ad9dfba2e, type: 3}
 --- !u!1 &7753430368941358321
 GameObject:
   m_ObjectHideFlags: 0
