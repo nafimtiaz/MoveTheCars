@@ -8,16 +8,17 @@ using MTC.Utils;
 public class Vehicle : BaseParkingLotObject, IVehicle
 {
     public int VehicleLength { get; set; }
-    public VehicleType VehicleType { get; set; } 
-    
-    public bool isMovingFwd;
-    public bool isTurning;
+    public VehicleType VehicleType { get; set; }
+
+    private bool hasLeftParking;
+    private bool isMovingFwd;
+    private bool isTurning;
     private Sequence sequence;
     private Vector3 axisOrigin;
     private Vector3 axisDir;
     private float turningTime;
     private float linearSpeed;
-    public bool isConsecutiveTurn;
+    private bool isConsecutiveTurn;
 
     public override void PopulateObject(ParkingLotObjectData data)
     {
@@ -30,12 +31,18 @@ public class Vehicle : BaseParkingLotObject, IVehicle
         isTurning = false;
         isMovingFwd = false;
         isConsecutiveTurn = false;
+        hasLeftParking = false;
     }
 
     #region Vehicle Interaction
 
     public virtual void CheckAndMove(Vector3 dir)
     {
+        if (hasLeftParking)
+        {
+            return;
+        }
+        
         float crossProd = Mathf.RoundToInt(Vector3.Cross(transform.forward, dir).magnitude);
 
         if (crossProd >= 1)
@@ -93,6 +100,7 @@ public class Vehicle : BaseParkingLotObject, IVehicle
 
     private void StartEscapeSequence(bool isBackward)
     {
+        hasLeftParking = true;
         TriggerTurnDirection(false, isBackward);
     }
     
@@ -169,6 +177,8 @@ public class Vehicle : BaseParkingLotObject, IVehicle
         {
             isMovingFwd = false;
             isTurning = false;
+            isConsecutiveTurn = false;
+            hasLeftParking = false;
             sequence.Kill();
             GameManager.GetPool().ReturnObjectToPool(this.gameObject);
         }
