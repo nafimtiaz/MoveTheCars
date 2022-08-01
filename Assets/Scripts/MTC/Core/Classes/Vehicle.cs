@@ -163,7 +163,6 @@ public class Vehicle : BaseParkingLotObject, IVehicle
         {
             isMovingFwd = false;
             TriggerTurnDirection(true, false);
-            OnSuccess();
         }
         
         if (col.CompareTag("finish"))
@@ -172,6 +171,11 @@ public class Vehicle : BaseParkingLotObject, IVehicle
             isTurning = false;
             sequence.Kill();
             GameManager.GetPool().ReturnObjectToPool(this.gameObject);
+        }
+        
+        if (col.CompareTag("success"))
+        {
+            OnSuccess();
         }
     }
 
@@ -182,6 +186,7 @@ public class Vehicle : BaseParkingLotObject, IVehicle
     /// </summary>
     public virtual void OnSuccess()
     {
+        GameManager.GetHomeView().AddVehicleCount();
         MakeSuccessSound();
         ShowSuccessEffect();
     }

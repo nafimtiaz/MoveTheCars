@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private MTCGameConfig gameConfig;
+    [SerializeField] private MTCHomeView homeView;
 
     private PoolManager PoolManager;
 
@@ -43,5 +44,10 @@ public class GameManager : MonoBehaviour
     public static PoolManager GetPool()
     {
         return Instance.PoolManager;
+    }
+    
+    public static MTCHomeView GetHomeView()
+    {
+        return Instance.homeView;
     }
 }

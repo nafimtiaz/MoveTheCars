@@ -484,12 +484,20 @@ public class LevelBuilder : MonoBehaviour
         
         LevelData currentLevelData = new LevelData(levelIndex, length, width, levelMessage, GetCurrentParkingLotObjectsData());
         GameData gameData = DataManager.LoadDataFromJson<GameData>();
-        if (gameData.levelData != null)
+        if (gameData != null)
         {
-            gameData.levelData.RemoveAll(lvl => lvl.levelIndex == levelIndex);
+            if (gameData.levelData != null)
+            {
+                gameData.levelData.RemoveAll(lvl => lvl.levelIndex == levelIndex);
+            }
+            else
+            {
+                gameData.levelData = new List<LevelData>();
+            }
         }
         else
         {
+            gameData = new GameData();
             gameData.levelData = new List<LevelData>();
         }
         gameData.levelData.Add(currentLevelData);

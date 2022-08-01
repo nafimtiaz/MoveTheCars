@@ -214,6 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameConfig: {fileID: 11400000, guid: 29cca04d4845947349d20c21b3951c96, type: 2}
+  homeView: {fileID: 0}
 --- !u!4 &152214315
 Transform:
   m_ObjectHideFlags: 0
@@ -1225,9 +1226,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shouldDrawGizmos: 0
   levelIndex: 1
-  width: 4
-  length: 6
-  numOfObstacles: 3
+  width: 3
+  length: 3
+  numOfObstacles: 0
   minLinGapObstacles: 2
   levelMessage: 
 --- !u!1001 &955977899

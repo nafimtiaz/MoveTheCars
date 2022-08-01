@@ -1549,7 +1549,7 @@ GameObject:
   - component: {fileID: 1003367959003062789}
   m_Layer: 0
   m_Name: ParkingBox
-  m_TagString: Untagged
+  m_TagString: success
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

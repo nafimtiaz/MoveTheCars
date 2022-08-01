@@ -10,6 +10,7 @@ namespace MTC.Gameplay
         private Vector3 touchStartPos = Vector3.zero;
         private Vector3 touchEndPos = Vector3.zero;
         private Transform currentSelectedVehicle;
+        private bool isTouchEnabled;
 
         private readonly Vector3[] globalDirs = 
         {
@@ -19,9 +20,14 @@ namespace MTC.Gameplay
             Vector3.right
         };
 
+        public void ToggleTouch(bool enable)
+        {
+            isTouchEnabled = enable;
+        }
+
         private void Update()
         {
-            if (Input.touchCount > 0)
+            if (Input.touchCount > 0 && isTouchEnabled)
             {
                 Touch t = Input.touches[0];
 

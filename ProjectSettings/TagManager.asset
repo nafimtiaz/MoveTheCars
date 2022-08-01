@@ -9,6 +9,7 @@ TagManager:
   - cornerLeft
   - finish
   - vehicle
+  - success
   layers:
   - Default
   - TransparentFX

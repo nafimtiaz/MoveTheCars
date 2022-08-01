@@ -1,21 +1,188 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MTC.Core.Classes;
+using MTC.Core.Enums;
+using MTC.Gameplay;
 using MTC.Utils;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MTCHomeView : MonoBehaviour
 {
-    public LevelData LevelData => currentLevelData;
-    private LevelData currentLevelData;
+    [Header("Common")]
+    [SerializeField] private TouchManager touchManager;
+    
+    [Header("UI Elemenets")]
+    [SerializeField] private GameObject mainMenuPanel;
+    [SerializeField] private GameObject levelSelectionPanel;
+    [SerializeField] private GameObject levelCompletePanel;
+    [SerializeField] private GameObject levelMessagePanel;
+    [SerializeField] private GameObject confirmationPanel;
+    [SerializeField] private GameObject inGameUIPanel;
+    
+    
+    [SerializeField] private Button menuPlayButton;
+    [SerializeField] private Button menuQuitButton;
+    [SerializeField] private Button[] levelSelectionButtons;
+    [SerializeField] private Button levelSelectionBackButton;
+    [SerializeField] private TextMeshProUGUI levelCompletionMessageText;
+    [SerializeField] private Button[] menuButtons;
+    [SerializeField] private Button[] restartButtons;
+    [SerializeField] private TextMeshProUGUI levelMessageText;
+    [SerializeField] private Button closeMessageButton;
+    [SerializeField] private Button confirmationCloseButton;
+    [SerializeField] private TextMeshProUGUI confirmationMessageText;
+    [SerializeField] private Button confirmationYesButton;
+    [SerializeField] private TextMeshProUGUI levelName;
+
+
+    [Header("Parking Lot Generation")]
     [SerializeField] private Transform parkingLotParent;
     [SerializeField] private Transform parkingLotGround;
     [SerializeField] private Transform[] roadCorners;
-
+    public LevelData LevelData => currentLevelData;
+    private LevelData currentLevelData;
     private List<GameObject> currentPoolObjects;
+    private int vehicleCount;
 
+    private bool isLevelComplete => vehicleCount >=
+                                    currentLevelData.lotObjects
+                                        .Where(x => x.lotObjectType == ParkingLotObjectType.Car)
+                                        .ToArray().Length;
 
+    void Start()
+    {
+        touchManager.ToggleTouch(false);
+        PopulateCallbacks();
+    }
+
+    #region UI Callbacks
+
+    private void PopulateCallbacks()
+    {
+        menuPlayButton.onClick.AddListener(OnMainMenuPlayButtonClicked);
+        menuQuitButton.onClick.AddListener(() => Application.Quit());
+        levelSelectionBackButton.onClick.AddListener(OnClickLevelSelectionbackButton);
+        confirmationCloseButton.onClick.AddListener(() => confirmationPanel.SetActive(false));
+
+        foreach (var btn in menuButtons)
+        {
+            btn.onClick.AddListener(OnClickMenuButton);
+        }
+        
+        foreach (var btn in restartButtons)
+        {
+            btn.onClick.AddListener(OnClickRestartButton);
+        }
+    }
+
+    private void OnClickMenuButton()
+    {
+        if (isLevelComplete)
+        {
+            OpenMenu();
+        }
+        else
+        {
+            confirmationMessageText.text = "Are you sure you want to quit to menu?";
+            confirmationPanel.SetActive(true);
+            confirmationYesButton.onClick.RemoveAllListeners();
+            confirmationYesButton.onClick.AddListener(OpenMenu);
+        }
+    }
+    
+    private void OnClickRestartButton()
+    {
+        if (isLevelComplete)
+        {
+            RestartLevel();
+        }
+        else
+        {
+            confirmationMessageText.text = "Are you sure you want to restart?";
+            confirmationPanel.SetActive(true);
+            confirmationYesButton.onClick.RemoveAllListeners();
+            confirmationYesButton.onClick.AddListener(RestartLevel);
+        }
+    }
+
+    private void OpenMenu()
+    {
+        confirmationPanel.SetActive(false);
+        levelCompletePanel.SetActive(false);
+        inGameUIPanel.SetActive(false);
+        levelSelectionPanel.SetActive(true);
+    }
+
+    private void RestartLevel()
+    {
+        levelCompletePanel.SetActive(false);
+        confirmationPanel.SetActive(false);
+        GenerateScene(currentLevelData.levelIndex, ()=>
+        {
+            touchManager.ToggleTouch(true);
+            inGameUIPanel.SetActive(true);
+        });
+    }
+
+    private void OnClickLevelSelectionbackButton()
+    {
+        mainMenuPanel.SetActive(true);
+        levelSelectionPanel.SetActive(false);
+    }
+
+        private void OnMainMenuPlayButtonClicked()
+    {
+        mainMenuPanel.SetActive(false);
+        levelSelectionPanel.SetActive(true);
+        
+        // We set to 8 levels for now
+        // this is a temporary solution
+        // normally we will populate the view using a separate view class
+        for (int i = 0; i < 8; i++)
+        {
+            TextMeshProUGUI btnText = levelSelectionButtons[i].GetComponentInChildren<TextMeshProUGUI>();
+            btnText.text = (i + 1).ToString();
+            int lvlIndex = i + 1;
+            levelSelectionButtons[i].onClick.AddListener((() => OnLevelButtonClicked(lvlIndex)));
+        }
+    }
+
+    private void OnLevelButtonClicked(int levelIndex)
+    {
+        GenerateScene(levelIndex, () =>
+        {
+            levelSelectionPanel.SetActive(false);
+            ShowLevelMessagePopup(currentLevelData.levelMessage);
+        });
+    }
+
+    private void ShowLevelMessagePopup(string levelMsg)
+    {
+        if (!string.IsNullOrEmpty(levelMsg))
+        {
+            levelMessageText.text = levelMsg;
+            levelMessagePanel.SetActive(true);
+            touchManager.ToggleTouch(false);
+            closeMessageButton.onClick.AddListener(()=>
+            {
+                touchManager.ToggleTouch(true);
+                inGameUIPanel.SetActive(true);
+                levelMessagePanel.SetActive(false);
+            });
+        }
+        else
+        {
+            inGameUIPanel.SetActive(true);
+            touchManager.ToggleTouch(true);
+        }
+    }
+
+    #endregion
+    
     #region Create/Clear Scene
     
     private readonly Vector3[] roadRotations =
@@ -33,10 +200,17 @@ public class MTCHomeView : MonoBehaviour
         Vector3.left, 
         Vector3.back
     };
-    public void GenerateScene(int levelIndex)
+    public void GenerateScene(int levelIndex, Action OnComplete = null)
     {
         ClearLevel();
+        vehicleCount = 0;
         PlaceParkingLotObjects(levelIndex);
+        levelName.text = $"LEVEL {levelIndex}";
+
+        if (OnComplete != null)
+        {
+            OnComplete();
+        }
     }
 
     void PlaceRoads(int length, int width)
@@ -77,7 +251,7 @@ public class MTCHomeView : MonoBehaviour
     void PlaceParkingLotObjects(int levelIndex)
     {
         GameData gameData = DataManager.LoadDataFromJson<GameData>();
-        currentLevelData = gameData.levelData[levelIndex];
+        currentLevelData = gameData.levelData.Find(x => x.levelIndex == levelIndex);
 
         foreach (var objData in currentLevelData.lotObjects)
         {
@@ -101,6 +275,27 @@ public class MTCHomeView : MonoBehaviour
         }
 
         currentPoolObjects = new List<GameObject>();
+    }
+
+    #endregion
+
+    #region Game Flow
+
+    public void AddVehicleCount()
+    {
+        vehicleCount++;
+
+        if (isLevelComplete)
+        {
+            OnLevelWin();
+        }
+    }
+
+    public void OnLevelWin()
+    {
+        levelCompletionMessageText.text = $"Congrats! You completed level {currentLevelData.levelIndex}!";
+        inGameUIPanel.SetActive(false);
+        levelCompletePanel.SetActive(true);
     }
 
     #endregion
