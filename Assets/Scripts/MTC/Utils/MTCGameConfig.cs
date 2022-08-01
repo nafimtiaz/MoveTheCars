@@ -9,6 +9,10 @@ public class MTCGameConfig : ScriptableObject
     public float vehicleLinearSpeed;
     public float vehicleTurningTime;
     
+    public GameObject impactParticle;
+    public GameObject explosionParticle;
+    public GameObject celebrationParticle;
+    
     [Header("Pooling")]
     public int vehiclePoolCount;
     public int wallPoolCount;

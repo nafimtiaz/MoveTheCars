@@ -2320,6 +2320,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5005910447497379348, guid: 1ecaaa15ac3c5442aa44bece4e05d378, type: 3}
   m_PrefabInstance: {fileID: 1528732893}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1558865724 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3770943637604027292, guid: 70e43d5f5cc854cfa88b6ba75a14c193, type: 3}
+  m_PrefabInstance: {fileID: 2923771969097642162}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1560239484 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2132581054233702644, guid: 70e43d5f5cc854cfa88b6ba75a14c193, type: 3}
@@ -3277,6 +3288,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2478354691342464611, guid: 70e43d5f5cc854cfa88b6ba75a14c193, type: 3}
+      propertyPath: levelName
+      value: 
+      objectReference: {fileID: 1558865724}
     - target: {fileID: 2478354691342464611, guid: 70e43d5f5cc854cfa88b6ba75a14c193, type: 3}
       propertyPath: touchManager
       value: 
