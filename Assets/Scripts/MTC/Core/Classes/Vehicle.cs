@@ -218,7 +218,14 @@ public class Vehicle : BaseParkingLotObject, IVehicle
 
     private void ShowSuccessEffect()
     {
-        
+        for (int i = 0; i < 3; i++)
+        {
+            Vector3 pos = transform.position;
+            GameObject.Instantiate(GameManager.GetConfig().celebrationParticle,
+                new Vector3(pos.x + Random.Range(-2f, 2f),
+                    pos.y + Random.Range(2f, 4f),
+                    pos.z + Random.Range(-2f, 2f)), Quaternion.identity);
+        }
     }
     
     /// <summary>

@@ -37,6 +37,7 @@ public class MTCHomeView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI confirmationMessageText;
     [SerializeField] private Button confirmationYesButton;
     [SerializeField] private TextMeshProUGUI levelName;
+    [SerializeField] private GameObject confettiGroup;
 
 
     [Header("Parking Lot Generation")]
@@ -111,6 +112,7 @@ public class MTCHomeView : MonoBehaviour
 
     private void OpenMenu()
     {
+        confettiGroup.SetActive(false);
         confirmationPanel.SetActive(false);
         levelCompletePanel.SetActive(false);
         inGameUIPanel.SetActive(false);
@@ -119,6 +121,7 @@ public class MTCHomeView : MonoBehaviour
 
     private void RestartLevel()
     {
+        confettiGroup.SetActive(false);
         levelCompletePanel.SetActive(false);
         confirmationPanel.SetActive(false);
         GenerateScene(currentLevelData.levelIndex, ()=>
@@ -294,6 +297,7 @@ public class MTCHomeView : MonoBehaviour
     public void OnLevelWin()
     {
         levelCompletionMessageText.text = $"Congrats! You completed level {currentLevelData.levelIndex}!";
+        confettiGroup.SetActive(true);
         inGameUIPanel.SetActive(false);
         levelCompletePanel.SetActive(true);
     }
