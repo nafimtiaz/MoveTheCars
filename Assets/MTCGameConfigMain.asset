@@ -19,6 +19,14 @@ MonoBehaviour:
   impactParticle: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
   explosionParticle: {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56, type: 3}
   celebrationParticle: {fileID: 1247311384876784, guid: 4adffb0018aeda44e9263f901167af1f, type: 3}
+  menuMusicLoop: {fileID: 8300000, guid: f8de5d0c92e0d49adaf1131ef6244b97, type: 3}
+  gameMusicLoop: {fileID: 8300000, guid: 787e75fa4f94e442598668d8667081a8, type: 3}
+  impactSound: {fileID: 8300000, guid: c043ab089944c4147afc574fb2f9aea2, type: 3}
+  fireworkSounds:
+  - {fileID: 8300000, guid: ca6d3d6aa98ee4d118312cc6e71c31e6, type: 3}
+  - {fileID: 8300000, guid: c68c1d271c4114eb7aa1fd78177af3d8, type: 3}
+  - {fileID: 8300000, guid: 3b9241ca8b2794cd585f11d75bec6959, type: 3}
+  celebrationSound: {fileID: 8300000, guid: 15b33f190b1fb4b21892b00873eee538, type: 3}
   vehiclePoolCount: 10
   wallPoolCount: 50
   obstaclePoolCount: 10

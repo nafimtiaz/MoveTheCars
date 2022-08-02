@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private MTCGameConfig gameConfig;
     [SerializeField] private MTCHomeView homeView;
+    [SerializeField] private SoundManager soundManager;
 
     private PoolManager PoolManager;
 
@@ -49,5 +50,10 @@ public class GameManager : MonoBehaviour
     public static MTCHomeView GetHomeView()
     {
         return Instance.homeView;
+    }
+    
+    public static SoundManager GetSoundManager()
+    {
+        return Instance.soundManager;
     }
 }

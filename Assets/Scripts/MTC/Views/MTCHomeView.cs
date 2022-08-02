@@ -59,6 +59,7 @@ public class MTCHomeView : MonoBehaviour
     {
         touchManager.ToggleTouch(false);
         PopulateCallbacks();
+        GameManager.GetSoundManager().SetBackgroundMusic(GameManager.GetConfig().menuMusicLoop);
     }
 
     #region UI Callbacks
@@ -118,6 +119,7 @@ public class MTCHomeView : MonoBehaviour
         levelCompletePanel.SetActive(false);
         inGameUIPanel.SetActive(false);
         levelSelectionPanel.SetActive(true);
+        OnSwitchToMenu();
     }
 
     private void RestartLevel()
@@ -208,6 +210,7 @@ public class MTCHomeView : MonoBehaviour
     {
         ClearLevel();
         vehicleCount = 0;
+        OnGameStart();
         PlaceParkingLotObjects(levelIndex);
         levelName.text = $"LEVEL {levelIndex}";
 
@@ -301,6 +304,7 @@ public class MTCHomeView : MonoBehaviour
         confettiGroup.SetActive(true);
         inGameUIPanel.SetActive(false);
         levelCompletePanel.SetActive(true);
+        GameManager.GetSoundManager().PlaySound(GameManager.GetConfig().celebrationSound);
     }
 
     public void AssignEmoBubble(Transform targetVehicle, bool isPositive)
@@ -313,6 +317,16 @@ public class MTCHomeView : MonoBehaviour
                 break;
             }
         }
+    }
+
+    private void OnGameStart()
+    {
+        GameManager.GetSoundManager().SetBackgroundMusic(GameManager.GetConfig().gameMusicLoop);
+    }
+
+    private void OnSwitchToMenu()
+    {
+        GameManager.GetSoundManager().SetBackgroundMusic(GameManager.GetConfig().menuMusicLoop);
     }
 
     #endregion

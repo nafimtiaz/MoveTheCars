@@ -81,7 +81,8 @@ public class Vehicle : BaseParkingLotObject, IVehicle
 
         if (isHitter)
         {
-            GameObject.Instantiate(GameManager.GetConfig().impactParticle, hitPoint, Quaternion.identity);   
+            GameObject.Instantiate(GameManager.GetConfig().impactParticle, hitPoint, Quaternion.identity);
+            GameManager.GetSoundManager().PlaySound(GameManager.GetConfig().impactSound);
         }
         else
         {
@@ -114,6 +115,7 @@ public class Vehicle : BaseParkingLotObject, IVehicle
 
     private void StartEscapeSequence(bool isBackward)
     {
+        GameManager.GetSoundManager().PlaySound(GameManager.GetConfig().carSound1);
         hasLeftParking = true;
         TriggerTurnDirection(false, isBackward);
     }
@@ -142,6 +144,7 @@ public class Vehicle : BaseParkingLotObject, IVehicle
                     transform.localPosition = RoundVectorByInterval(transform.localPosition,0.5f);
                     transform.localEulerAngles = RoundVectorByInterval(transform.localEulerAngles,90f);
                     isMovingFwd = true;
+                    GameManager.GetSoundManager().PlaySound(GameManager.GetConfig().carSound2);
                 }
                 else
                 {
@@ -218,7 +221,7 @@ public class Vehicle : BaseParkingLotObject, IVehicle
     
     private void MakeSuccessSound()
     {
-        
+        GameManager.GetSoundManager().PlaySound(GameManager.GetConfig().scoreSound);
     }
 
     private void ShowSuccessEffect()
