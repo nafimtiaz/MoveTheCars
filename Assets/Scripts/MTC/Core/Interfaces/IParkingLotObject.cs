@@ -13,6 +13,6 @@ namespace MTC.Core.Interfaces
         
         public Vector3 Rotation { get; set; }
         
-        void OnImpact();
+        void OnImpact(Vector3 hitPoint, bool isHitter);
     }
 }

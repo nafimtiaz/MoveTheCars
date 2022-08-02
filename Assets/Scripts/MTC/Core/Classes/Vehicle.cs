@@ -63,8 +63,8 @@ public class Vehicle : BaseParkingLotObject, IVehicle
                 if (hit.transform.GetComponent<IParkingLotObject>() != null)
                 {
                     IParkingLotObject lotObject = hit.transform.GetComponent<IParkingLotObject>();
-                    OnImpact();
-                    lotObject.OnImpact();
+                    OnImpact(hit.point, true);
+                    lotObject.OnImpact(Vector3.zero, false);
                 }
                 else
                 {
@@ -72,6 +72,16 @@ public class Vehicle : BaseParkingLotObject, IVehicle
                     StartEscapeSequence(isBackward);
                 }
             }));
+        }
+    }
+
+    public override void OnImpact(Vector3 hitPoint, bool isHitter)
+    {
+        base.OnImpact(hitPoint, isHitter);
+
+        if (isHitter)
+        {
+            GameObject.Instantiate(GameManager.GetConfig().impactParticle, hitPoint, Quaternion.identity);   
         }
     }
 

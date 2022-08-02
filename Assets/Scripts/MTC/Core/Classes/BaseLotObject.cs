@@ -39,17 +39,11 @@ namespace MTC.Core.Classes
         /// <summary>
         /// Called upon impact
         /// </summary>
-        public virtual void OnImpact()
+        public virtual void OnImpact(Vector3 hitPoint, bool isHitter)
         {
             MakeImpactVibration();
-            MakeImpactSound();
         }
 
-        private void MakeImpactSound()
-        {
-            
-        }
-        
         private void MakeImpactVibration()
         {
             transform.DOShakePosition(0.3f, 0.1f, 15, 0f);
