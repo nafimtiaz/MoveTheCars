@@ -83,6 +83,10 @@ public class Vehicle : BaseParkingLotObject, IVehicle
         {
             GameObject.Instantiate(GameManager.GetConfig().impactParticle, hitPoint, Quaternion.identity);   
         }
+        else
+        {
+            GameManager.GetHomeView().AssignEmoBubble(transform,false);
+        }
     }
 
     #endregion
@@ -207,6 +211,7 @@ public class Vehicle : BaseParkingLotObject, IVehicle
     public virtual void OnSuccess()
     {
         GameManager.GetHomeView().AddVehicleCount();
+        GameManager.GetHomeView().AssignEmoBubble(transform,true);
         MakeSuccessSound();
         ShowSuccessEffect();
     }

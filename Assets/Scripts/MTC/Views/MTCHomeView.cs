@@ -38,6 +38,7 @@ public class MTCHomeView : MonoBehaviour
     [SerializeField] private Button confirmationYesButton;
     [SerializeField] private TextMeshProUGUI levelName;
     [SerializeField] private GameObject confettiGroup;
+    [SerializeField] private EmoView[] emoBubbles;
 
 
     [Header("Parking Lot Generation")]
@@ -300,6 +301,18 @@ public class MTCHomeView : MonoBehaviour
         confettiGroup.SetActive(true);
         inGameUIPanel.SetActive(false);
         levelCompletePanel.SetActive(true);
+    }
+
+    public void AssignEmoBubble(Transform targetVehicle, bool isPositive)
+    {
+        for (int i = 0; i < emoBubbles.Length; i++)
+        {
+            if (!emoBubbles[i].gameObject.activeInHierarchy)
+            {
+                emoBubbles[i].TriggerEmo(targetVehicle,isPositive);
+                break;
+            }
+        }
     }
 
     #endregion
