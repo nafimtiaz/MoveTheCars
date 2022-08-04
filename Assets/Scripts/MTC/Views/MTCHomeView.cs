@@ -56,6 +56,8 @@ public class MTCHomeView : MonoBehaviour
                                         .Where(x => x.lotObjectType == ParkingLotObjectType.Car)
                                         .ToArray().Length;
 
+    private bool isGameOver;
+
     void Start()
     {
         touchManager.ToggleTouch(false);
@@ -92,7 +94,7 @@ public class MTCHomeView : MonoBehaviour
 
     private void OnClickMenuButton()
     {
-        if (isLevelComplete)
+        if (isLevelComplete || isGameOver)
         {
             OpenMenu();
         }
@@ -107,7 +109,7 @@ public class MTCHomeView : MonoBehaviour
     
     private void OnClickRestartButton()
     {
-        if (isLevelComplete)
+        if (isLevelComplete || isGameOver)
         {
             RestartLevel();
         }
@@ -219,6 +221,7 @@ public class MTCHomeView : MonoBehaviour
         ClearLevel();
         vehicleCount = 0;
         OnGameStart();
+        isGameOver = false;
         PlaceParkingLotObjects(levelIndex);
         SetCameraStatus(currentLevelData);
         levelName.text = $"LEVEL {levelIndex}";
@@ -322,6 +325,7 @@ public class MTCHomeView : MonoBehaviour
         inGameUIPanel.SetActive(false);
         levelCompletePanel.SetActive(true);
         touchManager.ToggleTouch(false);
+        isGameOver = true;
     }
 
     public void AssignEmoBubble(Transform targetVehicle, bool isPositive)
