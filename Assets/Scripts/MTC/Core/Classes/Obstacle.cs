@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Obstacle : BaseParkingLotObject
 {
-    [SerializeField] Transform obstacleMeshTransform;
+    [SerializeField] protected Transform obstacleMeshTransform;
     
     public override void PopulateObject(ParkingLotObjectData data)
     {

@@ -37,6 +37,12 @@ public class Vehicle : BaseParkingLotObject, IVehicle
         isMovingFwd = false;
         isConsecutiveTurn = false;
         isInteractable = true;
+
+        if (GetComponent<Rigidbody>() != null)
+        {
+            Destroy(GetComponent<Rigidbody>());
+        }
+        
         if (sequence != null)
         {
             sequence.Kill();

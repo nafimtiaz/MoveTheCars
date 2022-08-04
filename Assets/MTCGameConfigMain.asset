@@ -38,10 +38,10 @@ MonoBehaviour:
   carSound2: {fileID: 8300000, guid: 095ac4f2ac9554dbd9a9d2bc933cc2bd, type: 3}
   heySound: {fileID: 8300000, guid: ba822d90523224ef0a4eb992e60bb533, type: 3}
   sirenSound: {fileID: 8300000, guid: a45d1f4fd87f149c3ae78d71f061ec4c, type: 3}
-  vehiclePoolCount: 10
-  wallPoolCount: 50
+  vehiclePoolCount: 5
+  wallPoolCount: 40
   obstaclePoolCount: 10
-  roadPoolCount: 50
+  roadPoolCount: 40
   vehicles:
   - {fileID: 922461243315996675, guid: 3c08aff2ef951194b8925cdded7ec3b8, type: 3}
   - {fileID: 7407441167144776298, guid: d09a964ced5836b4ebb7952b3c62fd84, type: 3}

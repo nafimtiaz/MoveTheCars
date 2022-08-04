@@ -321,6 +321,7 @@ public class MTCHomeView : MonoBehaviour
         levelCompletionMessageText.text = "Game Over!";
         inGameUIPanel.SetActive(false);
         levelCompletePanel.SetActive(true);
+        touchManager.ToggleTouch(false);
     }
 
     public void AssignEmoBubble(Transform targetVehicle, bool isPositive)
