@@ -1861,6 +1861,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1863448896046272745, guid: ddf85d9fb0e8aad4f9cf81006f73a795, type: 3}
   m_PrefabInstance: {fileID: 928143370}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &929368712 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9062814204747054738, guid: 1ecaaa15ac3c5442aa44bece4e05d378, type: 3}
+  m_PrefabInstance: {fileID: 1528732893}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d077737c2ed4181be0ff66a920684d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &937223873 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8824326901672544611, guid: 22bb5295c8dc53b48a636f29f80ad2cc, type: 3}
@@ -3993,6 +4004,10 @@ PrefabInstance:
       propertyPath: mainCam
       value: 
       objectReference: {fileID: 910474220}
+    - target: {fileID: 7500486218399226159, guid: 70e43d5f5cc854cfa88b6ba75a14c193, type: 3}
+      propertyPath: parkingBox
+      value: 
+      objectReference: {fileID: 929368712}
     - target: {fileID: 7500486218399226159, guid: 70e43d5f5cc854cfa88b6ba75a14c193, type: 3}
       propertyPath: touchManager
       value: 

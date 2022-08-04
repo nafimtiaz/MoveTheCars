@@ -15,6 +15,7 @@ public class MTCHomeView : MonoBehaviour
     [Header("Common")] 
     [SerializeField] private Camera mainCam;
     [SerializeField] private TouchManager touchManager;
+    [SerializeField] private ParkingBox parkingBox;
     
     [Header("UI Elemenets")]
     [SerializeField] private GameObject mainMenuPanel;
@@ -69,7 +70,7 @@ public class MTCHomeView : MonoBehaviour
     {
         Vector2 camVector = new Vector2(currentLevelData.length, currentLevelData.width);
         mainCam.transform.LookAt(new Vector3(currentLevelData.length / 2f, 0f, currentLevelData.width / 2f));
-        mainCam.orthographicSize = Mathf.Lerp(7f, 11f, (camVector.magnitude - 4f) / 9f);
+        mainCam.orthographicSize = Mathf.Lerp(7f, 13f, (camVector.magnitude - 4f) / 9f);
     }
 
     #region UI Callbacks
@@ -224,6 +225,7 @@ public class MTCHomeView : MonoBehaviour
         isGameOver = false;
         PlaceParkingLotObjects(levelIndex);
         SetCameraStatus(currentLevelData);
+        parkingBox.ResetParkingBox();
         levelName.text = $"LEVEL {levelIndex}";
 
         if (OnComplete != null)
