@@ -11,6 +11,9 @@ using Random = UnityEngine.Random;
 public class LevelBuilder : MonoBehaviour
 {
     [SerializeField]
+    private Transform groundObject;
+    
+    [SerializeField]
     private bool shouldDrawGizmos = false;
     
     [SerializeField]
@@ -146,6 +149,7 @@ public class LevelBuilder : MonoBehaviour
 
     private void GenerateWallsAroundLot(Action OnComplete = null)
     {
+        groundObject.localScale = new Vector3(length, 1f, width);
         wallMask = GenerateWallsMask();
         wallGapPositions = new List<Dictionary<Vector3, int>>
         {
@@ -329,7 +333,7 @@ public class LevelBuilder : MonoBehaviour
                 {
                     ParkingLotObjectData data = new ParkingLotObjectData(
                         ParkingLotObjectType.Obstacle,
-                        "Barrel",
+                        GetObstacleType(),
                         new Vector3(l, 0f, w),
                         Vector3.zero);
 
@@ -344,6 +348,18 @@ public class LevelBuilder : MonoBehaviour
         {
             OnComplete();
         }
+    }
+    
+    private string GetObstacleType()
+    {
+        var obstacleTypes = Enum.GetValues(typeof(ObstacleType)) as ObstacleType[];
+
+        if (obstacleTypes != null)
+        {
+            return obstacleTypes[Random.Range(0, obstacleTypes.Length)].ToString();
+        }
+
+        return null;
     }
 
     private bool[] GetObstacleMask()
