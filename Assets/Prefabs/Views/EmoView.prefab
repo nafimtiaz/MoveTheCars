@@ -398,6 +398,7 @@ GameObject:
   - component: {fileID: 7690539760457942372}
   - component: {fileID: 392104560140481326}
   - component: {fileID: 2715699859265363285}
+  - component: {fileID: 2158420627477213769}
   m_Layer: 5
   m_Name: EmoView
   m_TagString: Untagged
@@ -489,6 +490,17 @@ MonoBehaviour:
   - {fileID: 7703877361140585869}
   - {fileID: 7134832611127625763}
   - {fileID: 3040313212011950391}
+--- !u!210 &2158420627477213769
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7044599929240262124}
+  m_Enabled: 1
+  m_SortingLayerID: 384774143
+  m_SortingLayer: 1
+  m_SortingOrder: 10
 --- !u!1 &7134832611127625763
 GameObject:
   m_ObjectHideFlags: 0
