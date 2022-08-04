@@ -31,6 +31,8 @@ public class MTCGameConfig : ScriptableObject
     public AudioClip explosionSound;
     public AudioClip carSound1;
     public AudioClip carSound2;
+    public AudioClip heySound;
+    public AudioClip sirenSound;
     
     [Header("Pooling")]
     public int vehiclePoolCount;

@@ -315,6 +315,13 @@ public class MTCHomeView : MonoBehaviour
         levelCompletePanel.SetActive(true);
         GameManager.GetSoundManager().PlaySound(GameManager.GetConfig().celebrationSound);
     }
+    
+    public void OnGameOver()
+    {
+        levelCompletionMessageText.text = "Game Over!";
+        inGameUIPanel.SetActive(false);
+        levelCompletePanel.SetActive(true);
+    }
 
     public void AssignEmoBubble(Transform targetVehicle, bool isPositive)
     {

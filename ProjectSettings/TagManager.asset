@@ -10,6 +10,7 @@ TagManager:
   - finish
   - vehicle
   - success
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -46,4 +47,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 384774143
     locked: 0
