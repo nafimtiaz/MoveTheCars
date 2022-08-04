@@ -105,7 +105,10 @@ public class Vehicle : BaseParkingLotObject, IVehicle
 
     public override void OnImpact(Vector3 hitPoint, bool isHitter)
     {
-        base.OnImpact(hitPoint, isHitter);
+        if (isInteractable)
+        {
+            base.OnImpact(hitPoint, isHitter);
+        }
 
         if (isHitter)
         {
