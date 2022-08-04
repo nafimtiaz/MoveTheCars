@@ -312,7 +312,7 @@ public class MTCHomeView : MonoBehaviour
 
     public void OnLevelWin()
     {
-        levelCompletionMessageText.text = $"Congrats! You completed level {currentLevelData.levelIndex}!";
+        levelCompletionMessageText.text = $"<size=120%>Congrats!<br><br><size=80%>Level {currentLevelData.levelIndex} Complete!";
         confettiGroup.SetActive(true);
         inGameUIPanel.SetActive(false);
         levelCompletePanel.SetActive(true);
