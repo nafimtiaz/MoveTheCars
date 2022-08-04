@@ -58,6 +58,7 @@ public class Vehicle : BaseParkingLotObject, IVehicle
             return;
         }
         
+        // accept touches only along vehicle's forward or backward direction
         float crossProd = Mathf.RoundToInt(Vector3.Cross(transform.forward, dir).magnitude);
 
         if (crossProd >= 1)
@@ -70,6 +71,11 @@ public class Vehicle : BaseParkingLotObject, IVehicle
             sequence.Kill();
         }
         
+        
+        // If the vehicle finds a lot object towards swipe direction,
+        // then it will move to it and call impact effect, otherwise
+        // it will consider the move as an escape from parking lot
+        // and start escape sequence
         RaycastHit hit;
         Vector3 origin = transform.position + dir + new Vector3(0f, 0.5f, 0f);
         
@@ -91,6 +97,7 @@ public class Vehicle : BaseParkingLotObject, IVehicle
                 }
                 else
                 {
+                    // check if vehicle is moving from front or back
                     bool isBackward = Vector3.Dot(transform.forward, dir) < 0;
                     StartEscapeSequence(isBackward);
                 }
@@ -109,6 +116,7 @@ public class Vehicle : BaseParkingLotObject, IVehicle
         return vehicle.hasLeftParkingLot;
     }
 
+    // the vehicle which gets hit gets annoyed, not the hitter
     public override void OnImpact(Vector3 hitPoint, bool isHitter)
     {
         if (isInteractable || isHitter)
@@ -162,6 +170,9 @@ public class Vehicle : BaseParkingLotObject, IVehicle
 
         if (cols.Length > 0)
         {
+            // Vehicle checks if it will collide with
+            // any incoming vehicle, if no then it comes out of the lot
+            // and starts running
             isInteractable = true;
             GameManager.GetHomeView().AssignEmoBubble(transform,false);
             sequence = DOTween.Sequence();
@@ -215,6 +226,8 @@ public class Vehicle : BaseParkingLotObject, IVehicle
                 }
             });
         }
+        // this is an edge case where vehicles have to 
+        // do back to back turning, common for vehicles at corner positions
         else
         {
             isConsecutiveTurn = false;
@@ -231,6 +244,8 @@ public class Vehicle : BaseParkingLotObject, IVehicle
 
     void OnTriggerEnter(Collider col)
     {
+        // colliders with cornerRight and cornerLeft helps the vehicle
+        // to change direction while doing escape sequence
         if (col.CompareTag("cornerRight"))
         {
             if (Vector3.Dot(transform.forward, (transform.position - col.transform.position).normalized) < 0)
@@ -253,6 +268,7 @@ public class Vehicle : BaseParkingLotObject, IVehicle
             TriggerTurnDirection(true, false);
         }
         
+        // return the object to the pool
         if (col.CompareTag("finish"))
         {
             isMovingFwd = false;
@@ -263,6 +279,7 @@ public class Vehicle : BaseParkingLotObject, IVehicle
             GameManager.GetPool().ReturnObjectToPool(this.gameObject);
         }
         
+        // when vehicle reaches the finish line
         if (col.CompareTag("success"))
         {
             OnSuccess();
