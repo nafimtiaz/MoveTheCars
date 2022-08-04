@@ -18,6 +18,8 @@ public class MTCGameConfig : ScriptableObject
     public GameObject impactParticle;
     public GameObject explosionParticle;
     public GameObject celebrationParticle;
+    public GameObject camMinSize;
+    public GameObject camMaxSize;
     
     [Header("Sounds")]
     public AudioClip menuMusicLoop;

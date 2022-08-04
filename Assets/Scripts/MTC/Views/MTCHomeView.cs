@@ -12,7 +12,8 @@ using UnityEngine.UI;
 
 public class MTCHomeView : MonoBehaviour
 {
-    [Header("Common")]
+    [Header("Common")] 
+    [SerializeField] private Camera mainCam;
     [SerializeField] private TouchManager touchManager;
     
     [Header("UI Elemenets")]
@@ -60,6 +61,13 @@ public class MTCHomeView : MonoBehaviour
         touchManager.ToggleTouch(false);
         PopulateCallbacks();
         GameManager.GetSoundManager().SetBackgroundMusic(GameManager.GetConfig().menuMusicLoop);
+    }
+
+    private void SetCameraStatus(LevelData currentLevelData)
+    {
+        Vector2 camVector = new Vector2(currentLevelData.length, currentLevelData.width);
+        mainCam.transform.LookAt(new Vector3(currentLevelData.length / 2f, 0f, currentLevelData.width / 2f));
+        mainCam.orthographicSize = Mathf.Lerp(7f, 11f, (camVector.magnitude - 4f) / 9f);
     }
 
     #region UI Callbacks
@@ -212,6 +220,7 @@ public class MTCHomeView : MonoBehaviour
         vehicleCount = 0;
         OnGameStart();
         PlaceParkingLotObjects(levelIndex);
+        SetCameraStatus(currentLevelData);
         levelName.text = $"LEVEL {levelIndex}";
 
         if (OnComplete != null)
