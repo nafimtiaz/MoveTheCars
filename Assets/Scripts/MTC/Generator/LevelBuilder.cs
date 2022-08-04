@@ -10,6 +10,14 @@ using Random = UnityEngine.Random;
 
 public class LevelBuilder : MonoBehaviour
 {
+    [Header("Manual Placement")]
+    [SerializeField]
+    private string manualObjectName;
+    
+    [SerializeField]
+    private ParkingLotObjectType manualObjectType;
+    
+    [Header("Auto Placement")]
     [SerializeField]
     private Transform groundObject;
     
@@ -141,6 +149,18 @@ public class LevelBuilder : MonoBehaviour
                 }));
             });   
         }
+    }
+
+    public void AddObjectManually()
+    {
+        ParkingLotObjectData data = new ParkingLotObjectData(
+            manualObjectType,
+            manualObjectName,
+            Vector3.zero, 
+            Vector3.zero);
+
+        var obj = ObjectCreator.CreateAndPlaceObject(data);
+        AddToParkingLotObjects(obj);
     }
 
     #endregion

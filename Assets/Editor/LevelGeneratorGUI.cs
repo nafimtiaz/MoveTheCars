@@ -10,6 +10,11 @@ public class LevelGeneratorGUI : Editor
 
         LevelBuilder builder = (LevelBuilder)target;
         
+        if(GUILayout.Button("Add Object [Manual]"))
+        {
+            builder.AddObjectManually();
+        }
+        
         if(GUILayout.Button("Generate All"))
         {
             builder.GenerateAll();
