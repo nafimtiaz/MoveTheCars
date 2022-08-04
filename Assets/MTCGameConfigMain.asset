@@ -36,6 +36,8 @@ MonoBehaviour:
   explosionSound: {fileID: 8300000, guid: 56f5c9d54b0fb48cdb4b68472ac6af6e, type: 3}
   carSound1: {fileID: 8300000, guid: 184bfc5c98145455d9c1e628d0b5bc31, type: 3}
   carSound2: {fileID: 8300000, guid: 095ac4f2ac9554dbd9a9d2bc933cc2bd, type: 3}
+  heySound: {fileID: 8300000, guid: ba822d90523224ef0a4eb992e60bb533, type: 3}
+  sirenSound: {fileID: 8300000, guid: a45d1f4fd87f149c3ae78d71f061ec4c, type: 3}
   vehiclePoolCount: 10
   wallPoolCount: 50
   obstaclePoolCount: 10
