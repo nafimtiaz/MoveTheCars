@@ -13,6 +13,7 @@ public class MTCGameConfig : ScriptableObject
     public float vehicleSpeedUnitsPerSecond;
     public float vehicleLinearSpeed;
     public float vehicleTurningTime;
+    public LayerMask vehicleLayerMask;
     
     public GameObject impactParticle;
     public GameObject explosionParticle;

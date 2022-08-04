@@ -16,6 +16,9 @@ MonoBehaviour:
   vehicleSpeedUnitsPerSecond: 10
   vehicleLinearSpeed: 10
   vehicleTurningTime: 0.25
+  vehicleLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
   impactParticle: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
   explosionParticle: {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56, type: 3}
   celebrationParticle: {fileID: 1247311384876784, guid: 4adffb0018aeda44e9263f901167af1f, type: 3}
@@ -27,6 +30,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c68c1d271c4114eb7aa1fd78177af3d8, type: 3}
   - {fileID: 8300000, guid: 3b9241ca8b2794cd585f11d75bec6959, type: 3}
   celebrationSound: {fileID: 8300000, guid: 15b33f190b1fb4b21892b00873eee538, type: 3}
+  scoreSound: {fileID: 8300000, guid: 2cfd404017aef4279b11c7d9ffa21604, type: 3}
+  explosionSound: {fileID: 8300000, guid: 56f5c9d54b0fb48cdb4b68472ac6af6e, type: 3}
+  carSound1: {fileID: 8300000, guid: 184bfc5c98145455d9c1e628d0b5bc31, type: 3}
+  carSound2: {fileID: 8300000, guid: 095ac4f2ac9554dbd9a9d2bc933cc2bd, type: 3}
   vehiclePoolCount: 10
   wallPoolCount: 50
   obstaclePoolCount: 10

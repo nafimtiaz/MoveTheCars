@@ -1,16 +1,18 @@
+using System;
 using MTC.Core.Classes;
 using MTC.Core.Enums;
 using MTC.Core.Interfaces;
 using UnityEngine;
 using DG.Tweening;
 using MTC.Utils;
+using Random = UnityEngine.Random;
 
 public class Vehicle : BaseParkingLotObject, IVehicle
 {
     public int VehicleLength { get; set; }
     public VehicleType VehicleType { get; set; }
 
-    private bool hasLeftParking;
+    public bool isInteractable;
     private bool isMovingFwd;
     private bool isTurning;
     private Sequence sequence;
@@ -19,6 +21,9 @@ public class Vehicle : BaseParkingLotObject, IVehicle
     private float turningTime;
     private float linearSpeed;
     private bool isConsecutiveTurn;
+    public bool hasLeftParkingLot => isMovingFwd || isTurning;
+
+    private Vector3 checkPos;
 
     public override void PopulateObject(ParkingLotObjectData data)
     {
@@ -31,14 +36,18 @@ public class Vehicle : BaseParkingLotObject, IVehicle
         isTurning = false;
         isMovingFwd = false;
         isConsecutiveTurn = false;
-        hasLeftParking = false;
+        isInteractable = true;
+        if (sequence != null)
+        {
+            sequence.Kill();
+        }
     }
 
     #region Vehicle Interaction
 
     public virtual void CheckAndMove(Vector3 dir)
     {
-        if (hasLeftParking)
+        if (!isInteractable)
         {
             return;
         }
@@ -50,21 +59,29 @@ public class Vehicle : BaseParkingLotObject, IVehicle
             return;
         }
         
+        if (sequence != null)
+        {
+            sequence.Kill();
+        }
+        
         RaycastHit hit;
         Vector3 origin = transform.position + dir + new Vector3(0f, 0.5f, 0f);
         
         if(Physics.Raycast(origin,dir,out hit,Mathf.Infinity))
         {
-            float dist = Mathf.RoundToInt(hit.distance);
+            isInteractable = false;
+            bool isEscapeRoute = hit.transform.GetComponent<IParkingLotObject>() == null || isRunningCar(hit.transform);
+            float dist = Mathf.RoundToInt(hit.distance) + (isEscapeRoute ? -1f : 0);
             float moveDuration = dist / GameManager.GetConfig().vehicleSpeedUnitsPerSecond;
             
             transform.DOMove(transform.position + (dir * dist), moveDuration).SetEase(Ease.Linear).OnComplete((() =>
             {
-                if (hit.transform.GetComponent<IParkingLotObject>() != null)
+                if (!isEscapeRoute)
                 {
                     IParkingLotObject lotObject = hit.transform.GetComponent<IParkingLotObject>();
                     OnImpact(hit.point, true);
                     lotObject.OnImpact(Vector3.zero, false);
+                    isInteractable = true;
                 }
                 else
                 {
@@ -73,6 +90,17 @@ public class Vehicle : BaseParkingLotObject, IVehicle
                 }
             }));
         }
+    }
+
+    private bool isRunningCar(Transform car)
+    {
+        Vehicle vehicle = car.GetComponent<Vehicle>();
+        if (vehicle == null)
+        {
+            return false;
+        }
+
+        return vehicle.hasLeftParkingLot;
     }
 
     public override void OnImpact(Vector3 hitPoint, bool isHitter)
@@ -115,9 +143,35 @@ public class Vehicle : BaseParkingLotObject, IVehicle
 
     private void StartEscapeSequence(bool isBackward)
     {
-        GameManager.GetSoundManager().PlaySound(GameManager.GetConfig().carSound1);
-        hasLeftParking = true;
-        TriggerTurnDirection(false, isBackward);
+        Vector3 checkDir = isBackward ? (-1f * transform.forward) : transform.forward;
+        Vector3 origin = transform.position + (checkDir * 2f) + new Vector3(0f, 0.5f, 0f);
+        
+        Collider[] cols = Physics.OverlapBox(origin,
+            new Vector3(0.5f, 0.5f, 2f), 
+            Quaternion.Euler(transform.eulerAngles + new Vector3(0f,90f,0f)),
+            GameManager.GetConfig().vehicleLayerMask);
+
+        if (cols.Length > 0)
+        {
+            isInteractable = true;
+            GameManager.GetHomeView().AssignEmoBubble(transform,false);
+            sequence = DOTween.Sequence();
+            sequence.AppendInterval(1f).OnComplete(() =>
+            {
+                isInteractable = false;
+                StartEscapeSequence(isBackward);
+            });
+        }
+        else
+        {
+            isInteractable = false;
+            float moveDuration = 1f / GameManager.GetConfig().vehicleSpeedUnitsPerSecond;
+            transform.DOMove(transform.position + checkDir, moveDuration).SetEase(Ease.Linear).OnComplete((() =>
+            {
+                GameManager.GetSoundManager().PlaySound(GameManager.GetConfig().carSound1);
+                TriggerTurnDirection(false, isBackward);
+            }));
+        }
     }
     
     /// <summary>
@@ -195,7 +249,7 @@ public class Vehicle : BaseParkingLotObject, IVehicle
             isMovingFwd = false;
             isTurning = false;
             isConsecutiveTurn = false;
-            hasLeftParking = false;
+            isInteractable = false;
             sequence.Kill();
             GameManager.GetPool().ReturnObjectToPool(this.gameObject);
         }
